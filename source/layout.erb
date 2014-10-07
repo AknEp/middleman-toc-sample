@@ -9,7 +9,19 @@
   <body>
     
     <div id="main" role="main">
-      <%= yield %>
+      <% contents =  yield %>
+      <h1>目次</h1>
+
+      <%# erb ファイル側でyield結果をパースして、h2を目次として表記します。 %>
+      <% node = Nokogiri::HTML.parse contents %>
+      <ul>
+        <% node.css('h2').each do |header| %>
+          <li><%= header.text %></li>
+        <% end %>
+      </ul>
+
+      <h1>内容</h1>
+      <%= contents %>
     </div>
     
     <aside>
